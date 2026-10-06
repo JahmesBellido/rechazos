@@ -255,14 +255,14 @@ export default function DashboardPage() {
       <div className="space-y-6">
 
         {/* Card Gran Fecha */}
-        <div className="rounded-2xl border-2 border-brand-400 dark:border-brand-500/50 bg-gradient-to-br from-brand-500 to-brand-600 p-6 text-white shadow-lg shadow-brand-500/20">
-          <div className="flex items-center justify-between">
+        <div className="rounded-2xl border-2 border-brand-400 dark:border-brand-500/50 bg-gradient-to-br from-brand-500 to-brand-600 p-4 sm:p-6 text-white shadow-lg shadow-brand-500/20">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-medium text-white/70 uppercase tracking-wider">Fecha de Analisis</p>
-              <p className="text-3xl font-extrabold mt-1">{formatFechaCorta(fecha)}</p>
+              <p className="text-2xl font-extrabold mt-1 sm:text-3xl">{formatFechaCorta(fecha)}</p>
               <p className="text-base text-white/80 mt-1">Totales acumulados globales</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <DatePicker
                 id="fecha-selector-estadisticas"
                 defaultDate={parseDateString(fecha)}
@@ -282,14 +282,14 @@ export default function DashboardPage() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {summary && (
             <>
               <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Rechazado</p>
-                    <p className="text-2xl font-bold text-rose-600 mt-1">{formatMoney(summary.totalRechazado)}</p>
+                    <p className="text-xl font-bold sm:text-2xl text-rose-600 mt-1">{formatMoney(summary.totalRechazado)}</p>
                     <p className="text-xs font-semibold text-rose-400 mt-0.5">{pctRechazo}% del total acumulado</p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-rose-500/10">
@@ -300,10 +300,10 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Liquidacion Semanal</p>
-                    <p className="text-2xl font-bold text-emerald-600 mt-1">{formatMoney(summary.liqSemanal)}</p>
+                    <p className="text-xl font-bold sm:text-2xl text-emerald-600 mt-1">{formatMoney(summary.liqSemanal)}</p>
                     <p className="text-xs font-semibold text-emerald-400 mt-0.5">{summary.pctSemanal}% rechazo esta semana</p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/10">
@@ -314,10 +314,10 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Cajas Físicas</p>
-                    <p className="text-2xl font-bold text-sky-600 mt-1">{summary.totalCajas.toLocaleString("es-PE")} / {summary.totalUnidades.toLocaleString("es-PE")}</p>
+                    <p className="text-xl font-bold sm:text-2xl text-sky-600 mt-1">{summary.totalCajas.toLocaleString("es-PE")} / {summary.totalUnidades.toLocaleString("es-PE")}</p>
                     <p className="text-xs font-semibold text-sky-400 mt-0.5">{summary.totalCajas} cajas | {summary.totalUnidades} unidades</p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-sky-500/10">
@@ -328,10 +328,10 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Documentos Rechazados</p>
-                    <p className="text-2xl font-bold text-violet-600 mt-1">{summary.documentosRechazados.toLocaleString("es-PE")}</p>
+                    <p className="text-xl font-bold sm:text-2xl text-violet-600 mt-1">{summary.documentosRechazados.toLocaleString("es-PE")}</p>
                     <p className="text-xs font-semibold text-violet-400 mt-0.5">{summary.totalRechazos} rechazos registrados</p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-violet-500/10">
@@ -477,7 +477,7 @@ export default function DashboardPage() {
                   height={340}
                 />
               </div>
-              <div className="flex flex-col gap-4 min-w-[220px]">
+              <div className="flex flex-col gap-4 md:min-w-[220px]">
                 <div className="rounded-xl bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 p-4">
                   <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Rechazado</p>
                   <p className="text-xl font-extrabold text-rose-600 mt-1">{formatMoney(totalRechazadoAyer)}</p>

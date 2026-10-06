@@ -551,7 +551,8 @@ span.flatpickr-weekday,
   .flatpickr-calendar.static {
     left: auto !important;
     right: 0 !important;
-    margin-right: -70px;
+    margin-right: 0;
+    max-width: calc(100vw - 2rem);
   }
 }
 
@@ -570,6 +571,13 @@ span.flatpickr-weekday,
 }
 .fc .fc-toolbar.fc-header-toolbar {
   @apply flex-col gap-4 px-6 pt-6 sm:flex-row;
+}
+.fc .fc-toolbar {
+  flex-wrap: wrap;
+  row-gap: 0.75rem;
+}
+.fc .fc-toolbar-title {
+  font-size: 1rem;
 }
 .fc-button-group {
   @apply gap-2;

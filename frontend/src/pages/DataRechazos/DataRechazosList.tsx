@@ -203,7 +203,7 @@ export default function DataRechazosList() {
                 </button>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-3">
               <div>
                 <label className="inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-success-700 bg-success-500/10 border border-success-500/20 rounded-lg cursor-pointer hover:bg-success-500/20 transition-colors dark:text-success-400">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -238,7 +238,7 @@ export default function DataRechazosList() {
           ) : (
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
               <div className="max-w-full overflow-x-auto">
-                <Table>
+                <Table className="whitespace-nowrap">
                   <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                     <TableRow>
                       <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
@@ -330,10 +330,10 @@ export default function DataRechazosList() {
                             })() : "-"}
                           </TableCell>
                           <TableCell className="px-4 py-3 text-start">
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                               <button
                                 onClick={() => handleEdit(r)}
-                                className="p-1.5 text-gray-500 hover:text-brand-500 dark:text-gray-400 dark:hover:text-brand-400"
+                                className="p-3 text-gray-500 hover:text-brand-500 dark:text-gray-400 dark:hover:text-brand-400"
                                 title="Editar"
                               >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -344,13 +344,13 @@ export default function DataRechazosList() {
                                 <div className="flex items-center gap-1">
                                   <button
                                     onClick={() => handleDelete(r.id)}
-                                    className="px-2 py-1 text-xs text-white bg-error-500 rounded hover:bg-error-600"
+                                    className="px-3 py-2.5 text-xs text-white bg-error-500 rounded hover:bg-error-600"
                                   >
                                     Confirmar
                                   </button>
                                   <button
                                     onClick={() => setDeleteConfirm(null)}
-                                    className="px-2 py-1 text-xs text-gray-600 bg-gray-200 rounded hover:bg-gray-300"
+                                    className="px-3 py-2.5 text-xs text-gray-600 bg-gray-200 rounded hover:bg-gray-300"
                                   >
                                     Cancelar
                                   </button>
@@ -358,7 +358,7 @@ export default function DataRechazosList() {
                               ) : (
                                 <button
                                   onClick={() => setDeleteConfirm(r.id)}
-                                  className="p-1.5 text-gray-500 hover:text-error-500 dark:text-gray-400 dark:hover:text-error-400"
+                                  className="p-3 text-gray-500 hover:text-error-500 dark:text-gray-400 dark:hover:text-error-400"
                                   title="Eliminar"
                                 >
                                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -388,19 +388,19 @@ export default function DataRechazosList() {
       )}
 
       {importResult && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl dark:bg-gray-900">
-            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm overflow-y-auto p-4">
+          <div className="w-full max-w-md mx-4 my-auto max-h-[85vh] overflow-y-auto bg-white rounded-2xl shadow-2xl dark:bg-gray-900">
+            <div className="px-4 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-800">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Resultado de importación</h2>
-                <button onClick={() => setImportResult(null)} className="p-1.5 text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                <button onClick={() => setImportResult(null)} className="p-2.5 text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
             </div>
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <div className="flex items-center gap-3 p-4 mb-4 bg-success-500/10 border border-success-500/20 rounded-xl">
                 <svg className="w-6 h-6 text-success-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

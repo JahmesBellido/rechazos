@@ -142,7 +142,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                         key={value}
                         className="group flex items-center justify-center rounded-full border-[0.7px] border-transparent bg-gray-100 py-1 pl-2.5 pr-2 text-sm text-gray-800 hover:border-gray-200 dark:bg-gray-800 dark:text-white/90 dark:hover:border-gray-800"
                       >
-                        <span className="flex-initial max-w-full">{text}</span>
+                        <span className="flex-initial max-w-full truncate">{text}</span>
                         <button
                           type="button"
                           onClick={(e) => {
@@ -211,7 +211,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
           {isOpen && (
             <div
-              className="absolute left-0 z-40 w-full overflow-y-auto bg-white rounded-lg shadow-sm top-full max-h-select dark:bg-gray-900"
+              className="absolute left-0 z-40 w-full overflow-y-auto bg-white rounded-lg shadow-sm top-full max-h-60 dark:bg-gray-900"
               onClick={(e) => e.stopPropagation()}
               role="listbox"
               aria-label={label}

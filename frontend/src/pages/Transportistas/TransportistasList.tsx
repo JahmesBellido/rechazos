@@ -145,7 +145,7 @@ export default function TransportistasList() {
           ) : (
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
               <div className="max-w-full overflow-x-auto">
-                <Table>
+                <Table className="whitespace-nowrap">
                   <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                     <TableRow>
                       <TableCell
@@ -223,10 +223,10 @@ export default function TransportistasList() {
                             {new Date(t.created_at).toLocaleDateString()}
                           </TableCell>
                           <TableCell className="px-4 py-3 text-start">
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                               <button
                                 onClick={() => handleEdit(t)}
-                                className="p-1.5 text-gray-500 hover:text-brand-500 dark:text-gray-400 dark:hover:text-brand-400"
+                                className="p-3 text-gray-500 hover:text-brand-500 dark:text-gray-400 dark:hover:text-brand-400"
                                 title="Editar"
                               >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -237,13 +237,13 @@ export default function TransportistasList() {
                                 <div className="flex items-center gap-1">
                                   <button
                                     onClick={() => handleDelete(t.id)}
-                                    className="px-2 py-1 text-xs text-white bg-error-500 rounded hover:bg-error-600"
+                                    className="px-3 py-2.5 text-xs text-white bg-error-500 rounded hover:bg-error-600"
                                   >
                                     Confirmar
                                   </button>
                                   <button
                                     onClick={() => setDeleteConfirm(null)}
-                                    className="px-2 py-1 text-xs text-gray-600 bg-gray-200 rounded hover:bg-gray-300"
+                                    className="px-3 py-2.5 text-xs text-gray-600 bg-gray-200 rounded hover:bg-gray-300"
                                   >
                                     Cancelar
                                   </button>
@@ -251,7 +251,7 @@ export default function TransportistasList() {
                               ) : (
                                 <button
                                   onClick={() => setDeleteConfirm(t.id)}
-                                  className="p-1.5 text-gray-500 hover:text-error-500 dark:text-gray-400 dark:hover:text-error-400"
+                                  className="p-3 text-gray-500 hover:text-error-500 dark:text-gray-400 dark:hover:text-error-400"
                                   title="Eliminar"
                                 >
                                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

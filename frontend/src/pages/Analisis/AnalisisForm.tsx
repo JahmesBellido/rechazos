@@ -92,9 +92,9 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/50 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-20 bg-black/50 backdrop-blur-sm overflow-y-auto">
       <div className="w-full max-w-xl mx-4 mb-10 bg-white rounded-2xl shadow-2xl dark:bg-gray-900">
-        <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
               {item ? "Editar Analisis" : "Registrar Analisis"}
@@ -110,7 +110,7 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6">
           {error && (
             <div className="mb-4 p-3 text-sm text-error-500 bg-error-500/10 border border-error-500/20 rounded-lg">
               {error}

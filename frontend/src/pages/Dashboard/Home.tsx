@@ -205,7 +205,7 @@ export default function Home() {
                 </p>
               )}
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <DatePicker
                 id="fecha-selector-home"
                 defaultDate={parseDateString(fecha)}
@@ -241,7 +241,7 @@ export default function Home() {
         ) : (
           <>
             {/* KPI Resumen */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
               {/* 1. Total Liquidacion */}
               <div className="rounded-2xl bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 p-5 text-white shadow-lg shadow-violet-500/25">
                 <p className="text-[11px] font-bold text-violet-100 uppercase tracking-wider">Total Liquidacion</p>
@@ -396,7 +396,7 @@ export default function Home() {
 
             {/* Top 10 Transportistas segun Cajas Fisicas */}
             <div>
-              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent flex items-center gap-3">
+              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent flex flex-wrap items-center gap-3">
                 Top 10 transportistas con mas rechazos segun cajas fisicas
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -404,7 +404,7 @@ export default function Home() {
                 </span>
               </h2>
               {topCajas.length > 0 && (
-                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 mb-6">
+                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 sm:p-6 mb-6">
                   <div className="flex items-center justify-between flex-wrap gap-6">
                     <div className="flex items-center gap-4">
                       <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/10">
@@ -417,7 +417,7 @@ export default function Home() {
                         <p className="text-sm text-gray-500 dark:text-gray-400">Top 10 transportistas con mas rechazos segun cajas</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-8">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-8">
                       <div className="text-right">
                         <p className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">Cajas Fisicas</p>
                         <div className="flex items-center justify-end gap-2">
@@ -494,7 +494,7 @@ export default function Home() {
                   <p className="text-gray-400">No hay datos de cajas fisicas para esta fecha</p>
                 </div>
               ) : (
-                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 sm:p-6">
                   <div className="space-y-3">
                     {topCajas.map((item, idx) => {
                       const pct = Number(item.porcentaje_cajas);
@@ -510,7 +510,7 @@ export default function Home() {
                           isHigh ? "bg-orange-50/50 dark:bg-orange-500/3 border border-orange-200/30 dark:border-orange-500/10" :
                           "bg-gray-50/50 dark:bg-white/[0.02] hover:bg-gray-100/50 dark:hover:bg-white/[0.04]"
                         }`}>
-                          <div className="flex items-center gap-4">
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                             {/* Ranking + Codigo */}
                             <div className="w-[180px] shrink-0">
                               <div className="flex items-center gap-2">
@@ -581,7 +581,7 @@ export default function Home() {
 
             {/* Transportistas con rechazo minimo (menor a 0.5%) segun cajas fisicas */}
             <div>
-              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent flex items-center gap-3">
+              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent flex flex-wrap items-center gap-3">
                 Transportistas con rechazo minimo segun cajas fisicas (menor a 0.5%)
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -604,7 +604,7 @@ export default function Home() {
               ) : (
                 <>
                   {/* Header resumen rechazo minimo */}
-                  <div className="rounded-2xl border border-emerald-200 bg-white dark:border-emerald-500/20 dark:bg-white/[0.03] p-6 mb-6">
+                  <div className="rounded-2xl border border-emerald-200 bg-white dark:border-emerald-500/20 dark:bg-white/[0.03] p-4 sm:p-6 mb-6">
                     <div className="flex items-center justify-between flex-wrap gap-6">
                       <div className="flex items-center gap-4">
                         <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/10">
@@ -619,7 +619,7 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-8">
+                      <div className="flex flex-wrap items-center gap-4 sm:gap-8">
                         <div className="text-right">
                           <p className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">Cajas Fisicas</p>
                           <div className="flex items-center justify-end gap-2">
@@ -674,8 +674,8 @@ export default function Home() {
                   </div>
 
                   {/* Lista grafica de todos los transportistas con rechazo menor a 0.5% */}
-                  <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
-                    <div className="flex items-center justify-between mb-3 px-1">
+                  <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 sm:p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3 px-1">
                       <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                         Todos los transportistas con rechazo menor a 0.5%
                       </p>
@@ -700,7 +700,7 @@ export default function Home() {
                             key={item.codigo_identificador}
                             className="group relative rounded-xl p-4 bg-emerald-50/40 border border-emerald-200/40 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-emerald-200/40 dark:bg-emerald-500/5 dark:border-emerald-500/15 dark:hover:shadow-black/30"
                           >
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                               {/* Ranking + Codigo */}
                               <div className="w-[180px] shrink-0">
                                 <div className="flex items-center gap-2">
@@ -763,7 +763,7 @@ export default function Home() {
 
             {/* Liquidacion Diaria - Top 10 Transportistas */}
             <div>
-              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent flex items-center gap-3">
+              <h2 className="text-2xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent flex flex-wrap items-center gap-3">
                 Liquidacion diaria Top 10 transportistas con mas rechazos segun montos
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -798,9 +798,9 @@ export default function Home() {
                       const colorsDia = getPorcentajeColor(Number(pctDia));
 
                       return (
-                        <div key={fecha} className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
+                        <div key={fecha} className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 sm:p-6">
                           {/* Header fecha */}
-                          <div className="flex items-center justify-between mb-5">
+                          <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
                             <div className="flex items-center gap-4">
                               <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${colorsDia.bg}/10`}>
                                 <svg className={`w-6 h-6 ${colorsDia.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -812,7 +812,7 @@ export default function Home() {
                                 <p className="text-sm text-gray-500 dark:text-gray-400">Top {top10.length} transportistas con mas rechazos segun montos</p>
                               </div>
                             </div>
-                            <div className="flex items-center gap-8">
+                            <div className="flex flex-wrap items-center gap-4 sm:gap-8">
                               <div className="text-right">
                                 <p className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">Liquidacion</p>
                                 <p className="text-2xl font-bold text-success-600">{formatMoney(totalLiqDia)}</p>
@@ -889,7 +889,7 @@ export default function Home() {
                                   isHigh ? "bg-orange-50/50 dark:bg-orange-500/3 border border-orange-200/30 dark:border-orange-500/10" :
                                   "bg-gray-50/50 dark:bg-white/[0.02] hover:bg-gray-100/50 dark:hover:bg-white/[0.04]"
                                 }`}>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                                     {/* Ranking + Codigo */}
                                     <div className="w-[180px] shrink-0">
                                       <div className="flex items-center gap-2">
@@ -1015,13 +1015,13 @@ export default function Home() {
                   <p className="text-gray-400">No hay datos de analisis documentario</p>
                 </div>
               ) : (
-                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 sm:p-6">
                   <div className="space-y-3">
                     {topMotivos.map((item, idx) => {
                       const pct = Number(item.porcentaje);
                       return (
                         <div key={idx} className="group relative rounded-xl p-4 bg-gray-50/50 dark:bg-white/[0.02] hover:bg-gray-100/50 dark:hover:bg-white/[0.04] transition-all">
-                          <div className="flex items-center gap-4">
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                             <div className="w-[200px] shrink-0">
                               <div className="flex items-center gap-2">
                                 <span className={`flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold shrink-0 ${

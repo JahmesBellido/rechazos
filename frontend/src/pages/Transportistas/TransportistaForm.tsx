@@ -83,17 +83,17 @@ export default function TransportistaForm({ transportista, onClose, onSave }: Tr
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/50 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-20 bg-black/50 backdrop-blur-sm overflow-y-auto">
       <div className="w-full max-w-xl mx-4 mb-10 bg-white rounded-2xl shadow-2xl dark:bg-gray-900">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
               {transportista ? "Editar Transportista" : "Nuevo Transportista"}
             </h2>
             <button
               onClick={onClose}
-              className="p-1.5 text-gray-400 transition-colors rounded-lg hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800"
+              className="p-2.5 text-gray-400 transition-colors rounded-lg hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -103,7 +103,7 @@ export default function TransportistaForm({ transportista, onClose, onSave }: Tr
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6">
           {error && (
             <div className="flex items-center gap-2 p-3 mb-4 text-sm text-error-500 bg-error-500/10 border border-error-500/20 rounded-xl">
               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ export default function TransportistaForm({ transportista, onClose, onSave }: Tr
           )}
 
           {/* Nombres & Apellidos */}
-          <div className="grid grid-cols-2 gap-3 mb-3">
+          <div className="grid grid-cols-1 gap-3 mb-3 sm:grid-cols-2">
             <div>
               <Label>Nombres *</Label>
               <Input

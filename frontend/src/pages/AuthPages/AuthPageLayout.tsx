@@ -9,8 +9,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
-      <div className="relative flex flex-col justify-center w-full h-screen lg:flex-row dark:bg-gray-900 sm:p-0">
+    <div className="relative p-6 bg-white z-1 dark:bg-gray-900 lg:p-0">
+      <div className="relative flex flex-col justify-center w-full min-h-screen lg:h-screen lg:flex-row dark:bg-gray-900">
         {children}
         <div className="relative items-center hidden w-full h-full lg:w-1/2 lg:grid overflow-hidden">
           <div
@@ -42,7 +42,7 @@ export default function AuthLayout({
             </div>
           </div>
         </div>
-        <div className="fixed z-50 hidden bottom-6 right-6 sm:block">
+        <div className="fixed z-50 bottom-6 right-6">
           <ThemeTogglerTwo />
         </div>
       </div>

@@ -31,8 +31,8 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="flex flex-col flex-1 w-full bg-gray-50 dark:bg-gray-950">
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto px-4">
+    <div className="flex flex-col flex-1 w-full min-h-0 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto px-4 py-8">
         <div>
             <div className="mb-8 text-center lg:text-left">
             <div className="flex items-center justify-center lg:justify-start mb-4">
@@ -95,16 +95,20 @@ export default function SignInForm() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <span
+                    <button
+                      type="button"
+                      aria-label={
+                        showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                      }
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-2 top-1/2 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-white/5"
                     >
                       {showPassword ? (
                         <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
                       ) : (
                         <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
                       )}
-                    </span>
+                    </button>
                   </div>
                 </div>
                 <div>
