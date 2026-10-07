@@ -77,6 +77,9 @@ interface DashboardData {
 interface TopMotivo {
   motivo: string;
   cantidad: number;
+  cajas: number;
+  unidades: number;
+  clientes: number;
   total_importe: number;
   porcentaje: string;
 }
@@ -1005,10 +1008,10 @@ export default function Home() {
               </span>
             </div>
 
-            {/* Top 5 Motivos de Anulacion */}
+            {/* Motivos de Anulacion del dia */}
             <div>
               <h2 className="text-2xl font-semibold text-gray-800 dark:text-white/90 mb-6">
-                Top 5 motivos de anulacion del dia
+                Motivos de anulacion del dia
               </h2>
               {topMotivos.length === 0 ? (
                 <div className="rounded-2xl border border-gray-200 bg-white p-10 text-center dark:border-gray-800 dark:bg-white/[0.03]">
@@ -1037,6 +1040,17 @@ export default function Home() {
                               <p className="text-xs text-gray-400 dark:text-gray-500 ml-9">{item.cantidad} documentos</p>
                             </div>
                             <div className="flex-1 min-w-0">
+                              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                                <span className="inline-flex items-center gap-1 rounded-full bg-violet-500/10 px-2.5 py-1 text-[11px] font-semibold text-violet-600 dark:text-violet-400">
+                                  Cajas <span className="font-bold">{item.cajas}</span>
+                                </span>
+                                <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/10 px-2.5 py-1 text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+                                  Unidades <span className="font-bold">{item.unidades}</span>
+                                </span>
+                                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                                  Clientes <span className="font-bold">{item.clientes}</span>
+                                </span>
+                              </div>
                               <div className="w-full h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                                 <div
                                   className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500"

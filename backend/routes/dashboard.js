@@ -841,12 +841,14 @@ router.get('/top-5-motivos', isAuthenticated, async (req, res) => {
     const [rows] = await pool.query(
       `SELECT motivo_anulacion,
               COUNT(*) AS cantidad,
+              COALESCE(SUM(cajas_motivo), 0) AS cajas,
+              COALESCE(SUM(unidades_motivo), 0) AS unidades,
+              COALESCE(SUM(cantidad_motivo), 0) AS clientes,
               SUM(importe) AS total_importe
        FROM analisis
        WHERE DATE(fecha_analisis) = ?
        GROUP BY motivo_anulacion
-       ORDER BY total_importe DESC
-       LIMIT 5`,
+       ORDER BY total_importe DESC`,
       [fecha]
     );
 
@@ -854,6 +856,9 @@ router.get('/top-5-motivos', isAuthenticated, async (req, res) => {
     const motivos = rows.map((r) => ({
       motivo: r.motivo_anulacion,
       cantidad: r.cantidad,
+      cajas: Number(r.cajas),
+      unidades: Number(r.unidades),
+      clientes: Number(r.clientes),
       total_importe: Number(r.total_importe),
       porcentaje: totalImporte > 0 ? ((Number(r.total_importe) / totalImporte) * 100).toFixed(1) : '0.0'
     }));
