@@ -25,6 +25,7 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
     let updated = 0;
     let skipped = 0;
     const errors = [];
+    const clientesUnicos = new Set();
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -87,14 +88,20 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
           [motivo, importeNum, cantNum, fecha, cajasNum, unidadesNum, cantMotivoNum, codCliente, razonSocial]
         );
         inserted++;
+        if (razonSocial) clientesUnicos.add(razonSocial.trim().toUpperCase());
       } catch (err) {
         skipped++;
         errors.push(`Fila ${i + 2}: ${err.message}`);
       }
     }
 
+    const listaClientes = [...clientesUnicos];
+    const detalleClientes = listaClientes.length
+      ? ` (${listaClientes.slice(0, 10).join(', ')}${listaClientes.length > 10 ? `, +${listaClientes.length - 10} más` : ''})`
+      : '';
+
     res.json({
-      message: `Insertados: ${inserted}, Omitidos: ${skipped}`,
+      message: `Insertados: ${inserted}, Omitidos: ${skipped}, Clientes únicos: ${listaClientes.length}${detalleClientes}`,
       errors: errors.slice(0, 10)
     });
   } catch (error) {
