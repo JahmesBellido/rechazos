@@ -11,8 +11,6 @@ interface Analisis {
   cajas_motivo: number;
   unidades_motivo: number;
   cantidad_motivo: number;
-  cod_cliente: string | null;
-  razon_social: string | null;
 }
 
 interface AnalisisFormProps {
@@ -32,8 +30,6 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
   const [cajasMotivo, setCajasMotivo] = useState("");
   const [unidadesMotivo, setUnidadesMotivo] = useState("");
   const [cantidadMotivo, setCantidadMotivo] = useState("");
-  const [codCliente, setCodCliente] = useState("");
-  const [razonSocial, setRazonSocial] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,16 +44,12 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
       setCajasMotivo(String(item.cajas_motivo ?? ""));
       setUnidadesMotivo(String(item.unidades_motivo ?? ""));
       setCantidadMotivo(String(item.cantidad_motivo ?? ""));
-      setCodCliente(item.cod_cliente || "");
-      setRazonSocial(item.razon_social || "");
     } else {
       const hoy = new Date().toISOString().split("T")[0];
       setFechaAnalisis(hoy);
       setCajasMotivo("");
       setUnidadesMotivo("");
       setCantidadMotivo("");
-      setCodCliente("");
-      setRazonSocial("");
     }
   }, [item]);
 
@@ -94,8 +86,6 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
           cajas_motivo: Number(cajasMotivo) || 0,
           unidades_motivo: Number(unidadesMotivo) || 0,
           cantidad_motivo: Number(cantidadMotivo) || 0,
-          cod_cliente: codCliente.trim() || null,
-          razon_social: razonSocial.trim() || null,
         }),
       });
 
@@ -173,27 +163,6 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
                   <option key={m} value={m}>{m}</option>
                 ))}
               </select>
-            </div>
-
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div>
-                <Label>Codigo de Cliente</Label>
-                <Input
-                  type="text"
-                  placeholder="Ej. C00123"
-                  value={codCliente}
-                  onChange={(e) => setCodCliente(e.target.value)}
-                />
-              </div>
-              <div>
-                <Label>Razon Social</Label>
-                <Input
-                  type="text"
-                  placeholder="Nombre del cliente"
-                  value={razonSocial}
-                  onChange={(e) => setRazonSocial(e.target.value)}
-                />
-              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

@@ -25,7 +25,6 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
     let updated = 0;
     let skipped = 0;
     const errors = [];
-    const clientesUnicos = new Set();
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -37,8 +36,6 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
         const cajasRaw = row.cajas_motivo || row.cajas || row.Cajas || row.CAJAS || row["Cajas Motivo"] || row["CAJAS MOTIVO"] || 0;
         const unidadesRaw = row.unidades_motivo || row.unidades || row.Unidades || row.UNIDADES || row["Unidades Motivo"] || row["UNIDADES MOTIVO"] || 0;
         const cantMotivoRaw = row.cantidad_motivo || row.Cantidad_Motivo || row["cantidad motivo"] || row["Cantidad Motivo"] || row["CANTIDAD MOTIVO"] || 0;
-        const codClienteRaw = row.cod_cliente || row.codcliente || row.Cod_Cliente || row.COD_CLIENTE || row["Cod Cliente"] || row["COD CLIENTE"] || row["Codigo Cliente"] || null;
-        const razonSocialRaw = row.razon_social || row.razonsocial || row["Razon Social"] || row["RAZON SOCIAL"] || row["Razón Social"] || row.Cliente || row.CLIENTE || null;
 
         if (!motivo) {
           skipped++;
@@ -79,29 +76,21 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
         const cajasNum = Number(cajasRaw) || 0;
         const unidadesNum = Number(unidadesRaw) || 0;
         const cantMotivoNum = Number(cantMotivoRaw) || 0;
-        const codCliente = codClienteRaw !== null && codClienteRaw !== undefined && String(codClienteRaw).trim() !== '' ? String(codClienteRaw).trim() : null;
-        const razonSocial = razonSocialRaw !== null && razonSocialRaw !== undefined && String(razonSocialRaw).trim() !== '' ? String(razonSocialRaw).trim() : null;
 
         await pool.query(
-          `INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [motivo, importeNum, cantNum, fecha, cajasNum, unidadesNum, cantMotivoNum, codCliente, razonSocial]
+          `INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo)
+           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [motivo, importeNum, cantNum, fecha, cajasNum, unidadesNum, cantMotivoNum]
         );
         inserted++;
-        if (razonSocial) clientesUnicos.add(razonSocial.trim().toUpperCase());
       } catch (err) {
         skipped++;
         errors.push(`Fila ${i + 2}: ${err.message}`);
       }
     }
 
-    const listaClientes = [...clientesUnicos];
-    const detalleClientes = listaClientes.length
-      ? ` (${listaClientes.slice(0, 10).join(', ')}${listaClientes.length > 10 ? `, +${listaClientes.length - 10} más` : ''})`
-      : '';
-
     res.json({
-      message: `Insertados: ${inserted}, Omitidos: ${skipped}, Clientes únicos: ${listaClientes.length}${detalleClientes}`,
+      message: `Insertados: ${inserted}, Omitidos: ${skipped}`,
       errors: errors.slice(0, 10)
     });
   } catch (error) {

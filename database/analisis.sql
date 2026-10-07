@@ -6,8 +6,6 @@ CREATE TABLE IF NOT EXISTS analisis (
   cajas_motivo INT DEFAULT 0,
   unidades_motivo INT DEFAULT 0,
   cantidad_motivo INT DEFAULT 0,
-  cod_cliente VARCHAR(50) DEFAULT NULL,
-  razon_social VARCHAR(255) DEFAULT NULL,
   fecha_analisis DATE NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

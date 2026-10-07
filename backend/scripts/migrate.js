@@ -6,9 +6,9 @@ const ANALISIS_COLUMNS = [
   { name: 'cajas_motivo', ddl: 'INT DEFAULT 0' },
   { name: 'unidades_motivo', ddl: 'INT DEFAULT 0' },
   { name: 'cantidad_motivo', ddl: 'INT DEFAULT 0' },
-  { name: 'cod_cliente', ddl: 'VARCHAR(50) DEFAULT NULL' },
-  { name: 'razon_social', ddl: 'VARCHAR(255) DEFAULT NULL' },
 ];
+
+const ANALISIS_DROP_COLUMNS = ['cod_cliente', 'razon_social'];
 
 async function tableExists(table) {
   const [rows] = await pool.query(
@@ -47,6 +47,12 @@ async function run() {
     }
     await pool.query(`ALTER TABLE analisis ADD COLUMN ${col.name} ${col.ddl}`);
     console.log(`[migrate] analisis.${col.name} agregada`);
+  }
+
+  for (const name of ANALISIS_DROP_COLUMNS) {
+    if (!(await columnExists('analisis', name))) continue;
+    await pool.query(`ALTER TABLE analisis DROP COLUMN ${name}`);
+    console.log(`[migrate] analisis.${name} eliminada`);
   }
 
   console.log('[migrate] Esquema al dia');

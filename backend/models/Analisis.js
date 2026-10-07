@@ -14,18 +14,18 @@ class Analisis {
   static async search(query) {
     const [rows] = await pool.query(
       `SELECT * FROM analisis
-       WHERE motivo_anulacion LIKE ? OR fecha_analisis LIKE ? OR cod_cliente LIKE ? OR razon_social LIKE ?
+       WHERE motivo_anulacion LIKE ? OR fecha_analisis LIKE ?
        ORDER BY fecha_analisis DESC, id DESC`,
-      [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
+      [`%${query}%`, `%${query}%`]
     );
     return rows;
   }
 
-  static async create({ motivo_anulacion, importe = 0, cant_analisis = 0, fecha_analisis, cajas_motivo = 0, unidades_motivo = 0, cantidad_motivo = 0, cod_cliente = null, razon_social = null }) {
+  static async create({ motivo_anulacion, importe = 0, cant_analisis = 0, fecha_analisis, cajas_motivo = 0, unidades_motivo = 0, cantidad_motivo = 0 }) {
     const [result] = await pool.query(
-      `INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social]
+      `INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo]
     );
     return result.insertId;
   }
@@ -33,7 +33,7 @@ class Analisis {
   static async update(id, data) {
     const fields = [];
     const values = [];
-    const allowed = ['motivo_anulacion', 'importe', 'cant_analisis', 'fecha_analisis', 'cajas_motivo', 'unidades_motivo', 'cantidad_motivo', 'cod_cliente', 'razon_social'];
+    const allowed = ['motivo_anulacion', 'importe', 'cant_analisis', 'fecha_analisis', 'cajas_motivo', 'unidades_motivo', 'cantidad_motivo'];
     for (const key of allowed) {
       if (data[key] !== undefined) {
         fields.push(`${key} = ?`);
