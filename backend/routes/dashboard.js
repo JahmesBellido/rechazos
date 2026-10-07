@@ -840,7 +840,7 @@ router.get('/top-5-motivos', isAuthenticated, async (req, res) => {
 
     const [rows] = await pool.query(
       `SELECT motivo_anulacion,
-              COUNT(*) AS cantidad,
+              COALESCE(SUM(cant_analisis), 0) AS cantidad,
               COALESCE(SUM(cajas_motivo), 0) AS cajas,
               COALESCE(SUM(unidades_motivo), 0) AS unidades,
               COALESCE(SUM(cantidad_motivo), 0) AS clientes,
