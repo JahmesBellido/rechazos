@@ -308,6 +308,20 @@ router.get('/export-excel', isAuthenticated, async (req, res) => {
       [fecha]
     );
 
+    const [analisisDelDia] = await pool.query(
+      `SELECT motivo_anulacion,
+              cant_analisis,
+              cajas_motivo,
+              unidades_motivo,
+              cantidad_motivo,
+              importe,
+              fecha_analisis
+       FROM analisis
+       WHERE DATE(fecha_analisis) = ?
+       ORDER BY importe DESC`,
+      [fecha]
+    );
+
     const [rechazosDelDia] = await pool.query(
       `SELECT r.codigo_identificador,
               t.nombres, t.apellidos,
@@ -676,7 +690,8 @@ router.get('/export-excel', isAuthenticated, async (req, res) => {
         const cell = ws3.getCell(row, ci + 1);
         cell.value = v;
         cell.border = borderStyle;
-        if (ci >= 3 && ci <= 5) cell.numFmt = '#,##0.00';
+        if (ci === 3 || ci === 5) cell.numFmt = '#,##0.00';
+        if (ci === 4) cell.numFmt = '#,##0';
       });
     });
 
@@ -694,10 +709,84 @@ router.get('/export-excel', isAuthenticated, async (req, res) => {
       cell.font = totalFont;
       cell.fill = totalFill;
       cell.border = borderStyle;
-      if (i >= 3 && i <= 5) cell.numFmt = '#,##0.00';
+      if (i === 3 || i === 5) cell.numFmt = '#,##0.00';
+      if (i === 4) cell.numFmt = '#,##0';
     });
 
-    // ========== HOJA 4: RECHAZOS ==========
+    // ========== HOJA 4: ANALISIS ==========
+    const wsAn = wb.addWorksheet('Analisis', { properties: { tabColor: { argb: 'FF7C3AED' } } });
+    wsAn.columns = [
+      { width: 45 }, { width: 18 }, { width: 12 }, { width: 14 }, { width: 12 }, { width: 16 }, { width: 15 }
+    ];
+
+    wsAn.mergeCells('A1:G1');
+    wsAn.getCell('A1').value = `ANALISIS DEL DIA - ${fechaFmt}`;
+    wsAn.getCell('A1').font = { ...titleFont, color: { argb: 'FF7C3AED' } };
+    wsAn.getCell('A1').alignment = { horizontal: 'center' };
+    wsAn.getCell('A1').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFEDE9FE' } };
+    wsAn.getRow(1).height = 30;
+
+    const headersAnalisis = ['Motivo', 'Cant. Documentos', 'Cajas', 'Unidades', 'Clientes', 'Importe (S/)', 'Fecha'];
+    headersAnalisis.forEach((h, i) => {
+      const cell = wsAn.getCell(3, i + 1);
+      cell.value = h;
+      cell.font = headerFont;
+      cell.fill = headerFill;
+      cell.border = borderStyle;
+      cell.alignment = { horizontal: 'center' };
+    });
+    wsAn.getRow(3).height = 25;
+
+    analisisDelDia.forEach((a, idx) => {
+      const row = 4 + idx;
+      const vals = [
+        a.motivo_anulacion,
+        Number(a.cant_analisis || 0),
+        Number(a.cajas_motivo || 0),
+        Number(a.unidades_motivo || 0),
+        Number(a.cantidad_motivo || 0),
+        Number(a.importe || 0),
+        a.fecha_analisis ? String(a.fecha_analisis).split('T')[0] : ''
+      ];
+      vals.forEach((v, ci) => {
+        const cell = wsAn.getCell(row, ci + 1);
+        cell.value = v;
+        cell.border = borderStyle;
+        if (ci >= 1 && ci <= 4) cell.numFmt = '#,##0';
+        if (ci === 5) cell.numFmt = '#,##0.00';
+      });
+    });
+
+    if (analisisDelDia.length === 0) {
+      wsAn.mergeCells('A4:G4');
+      const emptyCell = wsAn.getCell('A4');
+      emptyCell.value = 'Sin registros de analisis para esta fecha';
+      emptyCell.font = { italic: true, size: 11, color: { argb: 'FF6B7280' } };
+      emptyCell.alignment = { horizontal: 'center' };
+      emptyCell.border = borderStyle;
+    }
+
+    const totalRowAn = 4 + analisisDelDia.length + 1;
+    const totalsAnalisis = [
+      'TOTAL',
+      analisisDelDia.reduce((s, a) => s + Number(a.cant_analisis || 0), 0),
+      analisisDelDia.reduce((s, a) => s + Number(a.cajas_motivo || 0), 0),
+      analisisDelDia.reduce((s, a) => s + Number(a.unidades_motivo || 0), 0),
+      analisisDelDia.reduce((s, a) => s + Number(a.cantidad_motivo || 0), 0),
+      analisisDelDia.reduce((s, a) => s + Number(a.importe || 0), 0),
+      ''
+    ];
+    totalsAnalisis.forEach((v, i) => {
+      const cell = wsAn.getCell(totalRowAn, i + 1);
+      cell.value = v;
+      cell.font = totalFont;
+      cell.fill = totalFill;
+      cell.border = borderStyle;
+      if (i >= 1 && i <= 4) cell.numFmt = '#,##0';
+      if (i === 5) cell.numFmt = '#,##0.00';
+    });
+
+    // ========== HOJA 5: RECHAZOS ==========
     const ws4 = wb.addWorksheet('Rechazos', { properties: { tabColor: { argb: 'FFF97066' } } });
     ws4.columns = [
       { width: 15 }, { width: 25 }, { width: 20 }, { width: 18 }, { width: 18 }, { width: 10 }, { width: 12 }, { width: 15 }, { width: 18 }, { width: 15 }
@@ -765,7 +854,7 @@ router.get('/export-excel', isAuthenticated, async (req, res) => {
       if (i === 7 || i === 8) cell.numFmt = '#,##0.00';
     });
 
-    // ========== HOJA 5: DETALLE TRANSPORTISTAS ==========
+    // ========== HOJA 6: DETALLE TRANSPORTISTAS ==========
     const ws5 = wb.addWorksheet('Detalle Transportistas', { properties: { tabColor: { argb: 'FF00C49F' } } });
     ws5.columns = [
       { width: 15 }, { width: 25 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 14 }, { width: 18 }, { width: 14 }
