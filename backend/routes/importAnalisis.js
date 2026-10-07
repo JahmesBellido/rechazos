@@ -33,6 +33,11 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
         const importeRaw = row.importe || row.Importe || row.IMPORTE || row["Importe (S/)"] || 0;
         const cantRaw = row.cant_analisis || row.cant || row.Cant || row.CANT || row.cantidad || row.Cantidad || row["Cantidad Documentos"] || row["CANTIDAD DOCUMENTOS"] || 0;
         const fechaRaw = row.fecha_analisis || row.fecha || row.Fecha || row.FECHA || row["Fecha Analisis"] || row["FECHA ANALISIS"] || null;
+        const cajasRaw = row.cajas_motivo || row.cajas || row.Cajas || row.CAJAS || row["Cajas Motivo"] || row["CAJAS MOTIVO"] || 0;
+        const unidadesRaw = row.unidades_motivo || row.unidades || row.Unidades || row.UNIDADES || row["Unidades Motivo"] || row["UNIDADES MOTIVO"] || 0;
+        const cantMotivoRaw = row.cantidad_motivo || row.Cantidad_Motivo || row["cantidad motivo"] || row["Cantidad Motivo"] || row["CANTIDAD MOTIVO"] || 0;
+        const codClienteRaw = row.cod_cliente || row.codcliente || row.Cod_Cliente || row.COD_CLIENTE || row["Cod Cliente"] || row["COD CLIENTE"] || row["Codigo Cliente"] || null;
+        const razonSocialRaw = row.razon_social || row.razonsocial || row["Razon Social"] || row["RAZON SOCIAL"] || row["Razón Social"] || row.Cliente || row.CLIENTE || null;
 
         if (!motivo) {
           skipped++;
@@ -70,10 +75,16 @@ router.post('/import', isAuthenticated, upload.single('file'), async (req, res) 
 
         const importeNum = Number(importeRaw) || 0;
         const cantNum = Number(cantRaw) || 0;
+        const cajasNum = Number(cajasRaw) || 0;
+        const unidadesNum = Number(unidadesRaw) || 0;
+        const cantMotivoNum = Number(cantMotivoRaw) || 0;
+        const codCliente = codClienteRaw !== null && codClienteRaw !== undefined && String(codClienteRaw).trim() !== '' ? String(codClienteRaw).trim() : null;
+        const razonSocial = razonSocialRaw !== null && razonSocialRaw !== undefined && String(razonSocialRaw).trim() !== '' ? String(razonSocialRaw).trim() : null;
 
         await pool.query(
-          'INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis) VALUES (?, ?, ?, ?)',
-          [motivo, importeNum, cantNum, fecha]
+          `INSERT INTO analisis (motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [motivo, importeNum, cantNum, fecha, cajasNum, unidadesNum, cantMotivoNum, codCliente, razonSocial]
         );
         inserted++;
       } catch (err) {

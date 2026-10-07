@@ -35,10 +35,10 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { motivo_anulacion, importe, cant_analisis, fecha_analisis } = req.body;
+    const { motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social } = req.body;
     if (!motivo_anulacion) return res.status(400).json({ message: 'El motivo de anulacion es obligatorio' });
     if (!fecha_analisis) return res.status(400).json({ message: 'La fecha es obligatoria' });
-    const id = await Analisis.create({ motivo_anulacion, importe, cant_analisis, fecha_analisis });
+    const id = await Analisis.create({ motivo_anulacion, importe, cant_analisis, fecha_analisis, cajas_motivo, unidades_motivo, cantidad_motivo, cod_cliente, razon_social });
     const item = await Analisis.findById(id);
     res.status(201).json({ message: 'Registro creado', analisis: item });
   } catch (error) {

@@ -21,6 +21,11 @@ interface Analisis {
   importe: number;
   cant_analisis: number;
   fecha_analisis: string;
+  cajas_motivo: number;
+  unidades_motivo: number;
+  cantidad_motivo: number;
+  cod_cliente: string | null;
+  razon_social: string | null;
   created_at: string;
 }
 
@@ -295,10 +300,25 @@ export default function AnalisisList() {
                         Motivo Anulacion
                       </TableCell>
                       <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                        Codigo Cliente
+                      </TableCell>
+                      <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                        Razon Social
+                      </TableCell>
+                      <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
                         Importe
                       </TableCell>
                       <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
                         Cant. Analisis
+                      </TableCell>
+                      <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                        Cajas
+                      </TableCell>
+                      <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                        Unidades
+                      </TableCell>
+                      <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                        Cantidad Motivo
                       </TableCell>
                       <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
                         Fecha
@@ -331,11 +351,33 @@ export default function AnalisisList() {
                               {item.motivo_anulacion}
                             </span>
                           </TableCell>
+                          <TableCell className="px-4 py-3 text-start text-theme-sm">
+                            <span title={item.cod_cliente || ""} className="text-gray-500 dark:text-gray-400">
+                              {item.cod_cliente || "-"}
+                            </span>
+                          </TableCell>
+                          <TableCell className="px-4 py-3 text-start text-theme-sm">
+                            <span
+                              title={item.razon_social || ""}
+                              className="inline-flex max-w-[200px] items-center truncate text-gray-800 dark:text-white/90"
+                            >
+                              {item.razon_social || "-"}
+                            </span>
+                          </TableCell>
                           <TableCell className="px-4 py-3 text-start text-theme-sm font-medium text-brand-600 dark:text-brand-400">
                             {formatMoney(item.importe)}
                           </TableCell>
                           <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
                             {item.cant_analisis}
+                          </TableCell>
+                          <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
+                            {item.cajas_motivo ?? 0}
+                          </TableCell>
+                          <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
+                            {item.unidades_motivo ?? 0}
+                          </TableCell>
+                          <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
+                            {item.cantidad_motivo ?? 0}
                           </TableCell>
                           <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
                             {formatDate(item.fecha_analisis)}

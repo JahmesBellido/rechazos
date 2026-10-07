@@ -8,6 +8,11 @@ interface Analisis {
   importe: number;
   cant_analisis: number;
   fecha_analisis: string;
+  cajas_motivo: number;
+  unidades_motivo: number;
+  cantidad_motivo: number;
+  cod_cliente: string | null;
+  razon_social: string | null;
 }
 
 interface AnalisisFormProps {
@@ -24,6 +29,11 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
   const [importe, setImporte] = useState("");
   const [cantAnalisis, setCantAnalisis] = useState("");
   const [fechaAnalisis, setFechaAnalisis] = useState("");
+  const [cajasMotivo, setCajasMotivo] = useState("");
+  const [unidadesMotivo, setUnidadesMotivo] = useState("");
+  const [cantidadMotivo, setCantidadMotivo] = useState("");
+  const [codCliente, setCodCliente] = useState("");
+  const [razonSocial, setRazonSocial] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,9 +45,19 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
       setCantAnalisis(String(item.cant_analisis || ""));
       const fecha = item.fecha_analisis ? String(item.fecha_analisis).split("T")[0] : "";
       setFechaAnalisis(fecha);
+      setCajasMotivo(String(item.cajas_motivo ?? ""));
+      setUnidadesMotivo(String(item.unidades_motivo ?? ""));
+      setCantidadMotivo(String(item.cantidad_motivo ?? ""));
+      setCodCliente(item.cod_cliente || "");
+      setRazonSocial(item.razon_social || "");
     } else {
       const hoy = new Date().toISOString().split("T")[0];
       setFechaAnalisis(hoy);
+      setCajasMotivo("");
+      setUnidadesMotivo("");
+      setCantidadMotivo("");
+      setCodCliente("");
+      setRazonSocial("");
     }
   }, [item]);
 
@@ -71,6 +91,11 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
           importe: Number(importe) || 0,
           cant_analisis: Number(cantAnalisis) || 0,
           fecha_analisis: fechaAnalisis,
+          cajas_motivo: Number(cajasMotivo) || 0,
+          unidades_motivo: Number(unidadesMotivo) || 0,
+          cantidad_motivo: Number(cantidadMotivo) || 0,
+          cod_cliente: codCliente.trim() || null,
+          razon_social: razonSocial.trim() || null,
         }),
       });
 
@@ -152,6 +177,27 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
+                <Label>Codigo de Cliente</Label>
+                <Input
+                  type="text"
+                  placeholder="Ej. C00123"
+                  value={codCliente}
+                  onChange={(e) => setCodCliente(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label>Razon Social</Label>
+                <Input
+                  type="text"
+                  placeholder="Nombre del cliente"
+                  value={razonSocial}
+                  onChange={(e) => setRazonSocial(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
                 <Label>Importe (S/)</Label>
                 <Input
                   type="number"
@@ -170,6 +216,39 @@ export default function AnalisisForm({ item, motivos, onClose, onSave }: Analisi
                   placeholder="0"
                   value={cantAnalisis}
                   onChange={(e) => setCantAnalisis(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+              <div>
+                <Label>Cajas Motivo</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={cajasMotivo}
+                  onChange={(e) => setCajasMotivo(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label>Unidades Motivo</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={unidadesMotivo}
+                  onChange={(e) => setUnidadesMotivo(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label>Cantidad Motivo</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  value={cantidadMotivo}
+                  onChange={(e) => setCantidadMotivo(e.target.value)}
                 />
               </div>
             </div>
