@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm --prefix frontend ci --include=dev && npm --prefix frontend run build && npm --prefix backend ci
-    startCommand: node backend/server.js
+    startCommand: node backend/scripts/migrate.js && node backend/server.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
